@@ -60,16 +60,13 @@ export function AchievementsSection() {
     <section ref={containerRef} id="achievements" className="relative z-10 w-full bg-background h-auto md:h-[200vh]">
       
       {/* Pinned Container - Only sticky on desktop */}
-      <div className="relative md:sticky top-0 h-auto md:h-screen pt-24 pb-12 md:py-0 w-full flex flex-col items-center justify-center overflow-hidden border-t border-white/5">
+      <div className="relative md:sticky top-0 h-auto md:h-screen pt-24 pb-12 md:py-0 w-full flex flex-col items-center justify-center overflow-visible md:overflow-hidden border-t border-white/5">
         
         <div className="container mx-auto px-6 md:px-6 relative z-10 w-full flex flex-col items-center justify-center h-full">
           
           <motion.div 
             style={isMobile ? {} : { y: headerY, scale: headerScale }}
-            initial={isMobile ? { opacity: 0, y: 20 } : { opacity: 1 }}
-            whileInView={isMobile ? { opacity: 1, y: 0 } : {}}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={isMobile ? { duration: 0.6 } : {}}
+            initial={{ opacity: 1 }}
             className="text-center mb-10 relative z-30"
           >
             <span className="text-secondary font-orbitron tracking-widest uppercase text-sm font-semibold mb-3 block">
@@ -86,10 +83,11 @@ export function AchievementsSection() {
           {/* Content Wrapper that orchestrates the slide-ins */}
           <motion.div 
             style={isMobile ? {} : { opacity: contentOpacity, y: contentY }} 
+            initial={{ opacity: 1 }}
             className="w-full max-w-5xl relative z-20 flex flex-col items-center justify-center pointer-events-none"
           >
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 w-full pointer-events-auto overflow-hidden px-2 md:px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 w-full pointer-events-auto overflow-visible px-2 md:px-4">
               {achievements.map((achievement, index) => {
                 
                 // Row 1: index 0 and 1. Row 2: index 2 and 3.

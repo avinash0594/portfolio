@@ -20,9 +20,14 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      // Trigger the flying name transition right as the Hero section ends
+      setIsScrolled(window.scrollY > window.innerHeight * 0.8);
     };
     window.addEventListener("scroll", handleScroll);
+    
+    // Check initial position on mount
+    handleScroll();
+    
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

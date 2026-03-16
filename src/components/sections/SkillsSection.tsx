@@ -90,7 +90,7 @@ export function SkillsSection() {
             <span className="text-primary font-orbitron tracking-widest uppercase text-sm font-semibold mb-3 block">
               Capabilities
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold font-orbitron text-white">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-orbitron text-white">
               Technical Arsenal
             </h2>
             <p className="text-gray-400 mt-4 text-sm font-light uppercase tracking-widest animate-pulse">
