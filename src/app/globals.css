@@ -20,6 +20,11 @@
   --foreground: #F3F4F6;
 }
 
+html {
+  /* Scales the base rem size to 80%, matching the 80% browser zoom */
+  font-size: 80%;
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);

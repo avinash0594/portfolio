@@ -83,7 +83,7 @@ export function ProjectsSection() {
           className="absolute bottom-0 left-0 w-full max-w-lg h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none"
         />
 
-        <div className="container mx-auto px-4 md:px-6 pt-16 relative z-10 w-full">
+        <div className="container mx-auto px-4 md:px-6 pt-30 relative z-10 w-full">
 
           <div className="text-center mb-10">
             <span className="text-secondary font-orbitron tracking-widest uppercase text-sm font-semibold mb-3 block">
