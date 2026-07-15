@@ -52,8 +52,8 @@ function AchievementCard({ achievement, index, scrollYProgress, isMobile }: Achi
   // Create the transform for this specific card
   // Stamped effect: starts large (scale 1.5) and opaque-ish, rapidly shrinks to 1.0 (firmly placed)
   const stampScale = useTransform(
-    scrollYProgress,
-    [startProgress, endProgress],
+    scrollYProgress, 
+    [startProgress, endProgress], 
     [1.5, 1]
   );
 

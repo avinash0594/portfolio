@@ -31,7 +31,7 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-24 relative z-10 w-full bg-background border-t border-white/5">
+    <section id="contact" className="py-24 relative z-10 w-full bg-background border-t border-white/5 overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         
         <motion.div

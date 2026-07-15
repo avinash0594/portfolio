@@ -48,7 +48,7 @@ export function ServicesSection() {
   }, []);
 
   return (
-    <section id="services" className="py-24 relative z-10 w-full bg-background/50 border-t border-white/5">
+    <section id="services" className="py-24 relative z-10 w-full bg-background/50 border-t border-white/5 overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
            initial={{ opacity: 0, y: 20 }}
