@@ -11,7 +11,7 @@ const achievements = [
     description: "Successfully developed and deployed Industrial Vision System for Metal Fragment Detection.",
     icon: <Trophy className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary" />,
     image: "/image/Fragment.jpg"
-  }, 
+  },
   {
     title: "Panel Defect Project Implementation",
     issuer: "Mahindra & Mahindra",
@@ -25,14 +25,14 @@ const achievements = [
     description: "successfully completed the project entitled GPS Denied Autonomous Drone For Critical Missions",
     icon: <Award className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-accent" />,
     image: "/image/image.jpg"
-  },   
+  },
   {
     title: "Appreciation ",
     issuer: "Sun Nexus Solutions",
     description: "In recognition of outstanding dedication and successful tenure as a member.",
     icon: <Star className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary" />,
     image: "/image/sunnexus.jpg"
-  }, 
+  },
   {
     title: "Appreciation Hackathon",
     issuer: "NASA Space Apps Challenge",
@@ -67,8 +67,8 @@ function AchievementCard({ achievement, index, scrollYProgress, isMobile, onClic
 
   // Create the transform for this specific card
   const stampScale = useTransform(
-    scrollYProgress, 
-    [startProgress, endProgress], 
+    scrollYProgress,
+    [startProgress, endProgress],
     [1.5, 1]
   );
 
@@ -91,7 +91,7 @@ function AchievementCard({ achievement, index, scrollYProgress, isMobile, onClic
     >
       {/* Visual background indicator for clicking */}
       <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/[0.02] transition-colors duration-300" />
-      
+
       <div className="p-2 sm:p-3 md:p-4 rounded-xl bg-white/5 border border-white/10 shrink-0 group-hover:scale-110 transition-transform relative z-10">
         {achievement.icon}
       </div>
@@ -158,7 +158,7 @@ export function AchievementsSection() {
   // Stage 1: Header Reveal (0.05 to 0.25 progress)
   const headerY = useTransform(scrollYProgress, [0.05, 0.25], ["10vh", "0vh"]);
   const headerScale = useTransform(scrollYProgress, [0.05, 0.25], [1.15, 1]);
-  
+
   // Stage 2: Content Reveal & Parallax (0.10 to 0.25 progress)
   const contentOpacity = useTransform(scrollYProgress, [0.10, 0.25], [0, 1]);
   const contentY = useTransform(scrollYProgress, [0.10, 0.25], ["50px", "0px"]);
@@ -169,13 +169,13 @@ export function AchievementsSection() {
 
   return (
     <section ref={containerRef} id="achievements" className="relative z-10 w-full bg-background h-auto md:h-[200vh]">
-      
+
       {/* Pinned Container - Only sticky on desktop */}
       <div className="relative md:sticky top-0 h-auto md:h-screen pt-24 pb-12 md:pt-28 md:pb-0 w-full flex flex-col items-center justify-start overflow-visible md:overflow-hidden border-t border-white/5">
-        
+
         <div className="container mx-auto px-6 md:px-6 relative z-10 w-full flex flex-col items-center justify-center h-full">
-          
-          <motion.div 
+
+          <motion.div
             style={isMobile ? {} : { y: headerY, scale: headerScale }}
             {...(isMobile ? {
               initial: { opacity: 0, y: 15 },
@@ -192,17 +192,17 @@ export function AchievementsSection() {
               Achievements
             </h2>
             <p className="text-gray-400 mt-4 text-sm font-light uppercase tracking-widest animate-pulse">
-              Scroll to explore
+              Click to View Certificates
             </p>
           </motion.div>
 
           {/* Content Wrapper that orchestrates the slide-ins */}
-          <motion.div 
-            style={isMobile ? {} : { opacity: contentOpacity, y: contentY }} 
+          <motion.div
+            style={isMobile ? {} : { opacity: contentOpacity, y: contentY }}
             initial={{ opacity: 1 }}
             className="w-full max-w-5xl relative z-20 flex flex-col items-center justify-center pointer-events-none"
           >
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 w-full pointer-events-auto overflow-visible px-2 md:px-4">
               {achievements.map((achievement, index) => (
                 <AchievementCard
@@ -215,7 +215,7 @@ export function AchievementsSection() {
                 />
               ))}
             </div>
-            
+
           </motion.div>
 
         </div>
