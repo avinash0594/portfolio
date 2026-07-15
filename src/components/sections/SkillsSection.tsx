@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const skillsData = [
   {
@@ -44,21 +44,32 @@ const skillsData = [
 
 export function SkillsSection() {
   const containerRef = useRef<HTMLElement>(null);
+  const [mounted, setMounted] = useState(false);
   const [isSpread, setIsSpread] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Extend scroll distance to 200vh
+  useEffect(() => {
+    setMounted(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Extend scroll distance to 200vh, start tracking as it enters screen
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start end", "end end"]
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // If we scroll past 25% of the sticky section, trigger the spread permanently
-    // Or if we scroll back up past 25%, let it close again (standard scroll behavior)
-    if (latest > 0.25 && !isSpread) {
+    // If we scroll past 28% of the scroll target, trigger the spread
+    if (latest > 0.28 && !isSpread) {
       setIsSpread(true);
-    } else if (latest <= 0.25 && isSpread) {
+    } else if (latest <= 0.28 && isSpread) {
       setIsSpread(false);
     }
   });
@@ -66,17 +77,21 @@ export function SkillsSection() {
   // Background Parallax Orbs
   const yBg = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
 
-  // Scroll Reveal Animations
-  const headerY = useTransform(scrollYProgress, [0, 0.15], ["25vh", "0vh"]);
-  const headerScale = useTransform(scrollYProgress, [0, 0.15], [1.3, 1]);
-  const contentOpacity = useTransform(scrollYProgress, [0.1, 0.15], [0, 1]);
-  const contentY = useTransform(scrollYProgress, [0.1, 0.15], ["10vh", "0vh"]);
+  // Scroll Reveal Animations - finish early so it's fully visible at pinned state
+  const headerY = useTransform(scrollYProgress, [0.05, 0.25], ["10vh", "0vh"]);
+  const headerScale = useTransform(scrollYProgress, [0.05, 0.25], [1.15, 1]);
+  const contentOpacity = useTransform(scrollYProgress, [0.1, 0.25], [0, 1]);
+  const contentY = useTransform(scrollYProgress, [0.1, 0.25], ["50px", "0px"]);
+
+  if (!mounted) {
+    return <section ref={containerRef} id="skills" className="relative z-10 w-full bg-background h-[200vh]" />;
+  }
 
   return (
     <section ref={containerRef} id="skills" className="relative z-10 w-full bg-background h-auto md:h-[200vh]">
       
       {/* Pinned Container */}
-      <div className="relative md:sticky top-0 h-auto md:h-screen pt-24 pb-12 md:py-0 w-full flex flex-col items-center justify-center overflow-hidden border-y border-white/5">
+      <div className="relative md:sticky top-0 h-auto md:h-screen pt-24 pb-12 md:pt-28 md:pb-0 w-full flex flex-col items-center justify-start overflow-hidden border-y border-white/5">
         
         {/* Subtle Background Parallax Elements */}
         <motion.div 
@@ -86,7 +101,16 @@ export function SkillsSection() {
 
         <div className="container mx-auto px-4 md:px-6 relative z-10 w-full flex flex-col items-center justify-center h-full">
           
-          <motion.div style={{ y: headerY, scale: headerScale }} className="text-center mb-10 relative z-20">
+          <motion.div 
+            style={isMobile ? { y: 0, scale: 1 } : { y: headerY, scale: headerScale }}
+            {...(isMobile ? {
+              initial: { opacity: 0, y: 15 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true, margin: "-100px" },
+              transition: { duration: 0.8, ease: "easeOut" }
+            } : {})}
+            className="text-center mb-10 relative z-20"
+          >
             <span className="text-primary font-orbitron tracking-widest uppercase text-sm font-semibold mb-3 block">
               Capabilities
             </span>
@@ -98,10 +122,13 @@ export function SkillsSection() {
             </p>
           </motion.div>
 
-          <motion.div style={{ opacity: contentOpacity, y: contentY }} className="w-full flex flex-col items-center justify-center pointer-events-none">
+          <motion.div 
+            style={isMobile ? { opacity: 1, y: 0 } : { opacity: contentOpacity, y: contentY }} 
+            className="w-full flex flex-col items-center justify-center pointer-events-none"
+          >
             
             {/* Desktop 3D Stack Reveal driven by scroll */}
-            <div className="hidden md:flex relative w-full max-w-5xl h-[600px] justify-center items-center perspective-[2000px] pointer-events-auto">
+            <div className="hidden md:flex relative w-full max-w-5xl h-[500px] justify-center items-center perspective-[2000px] pointer-events-auto">
               {skillsData.map((categoryGroup, index) => {
                 
                 // Calculate target positions for a structured 3x3 layout
@@ -109,8 +136,8 @@ export function SkillsSection() {
                 const col = index % 3;
                 
                 // Spread offsets
-                const targetX = (col - 1) * 340; // Spacing horizontally
-                const targetY = (row - 1) * 200; // Spacing vertically
+                const targetX = (col - 1) * 330; // Spacing horizontally
+                const targetY = (row - 1) * 165; // Spacing vertically
                 
                 // Base state (Stacked tightly in center)
                 const stackedX = 0;

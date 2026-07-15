@@ -72,7 +72,7 @@ export function ProjectsSection() {
   return (
     <section ref={containerRef} id="projects" className="relative z-10 w-full bg-background" style={{ height: "300vh" }}>
 
-      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-start pt-24 md:pt-28 overflow-hidden">
         {/* Subtle Background Parallax Elements */}
         <motion.div
           style={{ y: yBg1 }}
@@ -83,7 +83,7 @@ export function ProjectsSection() {
           className="absolute bottom-0 left-0 w-full max-w-lg h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none"
         />
 
-        <div className="container mx-auto px-4 md:px-6 pt-30 relative z-10 w-full">
+        <div className="container mx-auto px-4 md:px-6 relative z-10 w-full">
 
           <div className="text-center mb-10">
             <span className="text-secondary font-orbitron tracking-widest uppercase text-sm font-semibold mb-3 block">
@@ -98,7 +98,7 @@ export function ProjectsSection() {
           </div>
 
           {/* 3D Coverflow Carousel */}
-          <div className="relative w-full h-[550px] flex justify-center items-center perspective-[2000px]">
+          <div className="relative w-full h-[460px] flex justify-center items-center perspective-[2000px]">
             {projects.map((project, index) => {
               const offset = index - activeIndex;
               const absOffset = Math.abs(offset);
@@ -126,7 +126,7 @@ export function ProjectsSection() {
                   }}
                   transition={{ duration: 0.35, ease: "easeOut" }}
                   style={{ transformOrigin: "center center" }}
-                  className={`absolute w-[85vw] max-w-[320px] sm:max-w-[360px] md:max-w-[420px] h-auto min-h-[260px] sm:min-h-[320px] md:min-h-[500px]`}
+                  className={`absolute w-[85vw] max-w-[320px] sm:max-w-[360px] md:max-w-[420px] h-auto min-h-[260px] sm:min-h-[320px] md:min-h-[420px]`}
                 >
                   <div className={`glass-panel h-full w-full flex flex-col p-4 sm:p-5 md:p-8 transition-all duration-500 relative overflow-hidden shadow-xl ${isCenter ? 'bg-white/5 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6)] border-white/20' : 'border-white/5 bg-background/80'}`}>
                     {/* Subtle top border accent */}

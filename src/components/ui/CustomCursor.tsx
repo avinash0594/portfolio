@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export function CustomCursor() {
+  const [mounted, setMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
@@ -15,6 +16,7 @@ export function CustomCursor() {
   const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
+    setMounted(true);
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX - 16);
       cursorY.set(e.clientY - 16);
@@ -54,7 +56,7 @@ export function CustomCursor() {
     };
   }, [cursorX, cursorY]);
 
-  if (typeof window === "undefined") return null;
+  if (!mounted) return null;
 
   return (
     <>
@@ -67,7 +69,7 @@ export function CustomCursor() {
         }}
         animate={{
           scale: isHovering ? 1.5 : 1,
-          backgroundColor: isHovering ? "rgba(0, 240, 255, 0.1)" : "transparent",
+          backgroundColor: isHovering ? "rgba(0, 240, 255, 0.1)" : "rgba(0, 240, 255, 0)",
         }}
         transition={{ type: "tween", ease: "backOut", duration: 0.15 }}
       >

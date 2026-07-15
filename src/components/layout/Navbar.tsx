@@ -16,12 +16,15 @@ const navLinks = [
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showNavName, setShowNavName] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Trigger the flying name transition right as the Hero section ends
-      setIsScrolled(window.scrollY > window.innerHeight * 0.8);
+      // Shrink header padding early for standard responsive feel
+      setIsScrolled(window.scrollY > 50);
+      // Trigger the name transition right as the Hero name fades out (10% viewport height)
+      setShowNavName(window.scrollY > window.innerHeight * 0.1);
     };
     window.addEventListener("scroll", handleScroll);
     
@@ -50,13 +53,13 @@ export function Navbar() {
         >
           <Link href="/" className="group relative flex items-center min-h-[32px] min-w-[150px]">
             <AnimatePresence>
-              {isScrolled && (
+              {showNavName && (
                 <motion.div 
                   className="flex flex-row items-baseline gap-1.5 absolute left-0"
-                  initial={{ opacity: 0, y: -10 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
+                  exit={{ opacity: 0, y: 15 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
                 >
                   <span className="font-orbitron font-bold text-lg md:text-xl tracking-wider text-white whitespace-nowrap">
                     AVINASH
