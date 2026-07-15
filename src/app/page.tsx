@@ -13,12 +13,12 @@ import { ScrollTransition } from "@/components/ui/ScrollTransition";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-background">
+    <main className="relative min-h-screen bg-background w-full overflow-x-hidden">
       <BackgroundCanvas />
       <Navbar />
       
       {/* Content wrapper with relative z-index so it sits above canvas */}
-      <div className="relative z-10 flex flex-col min-h-screen">
+      <div className="relative z-10 flex flex-col min-h-screen w-full overflow-x-hidden">
         <HeroSection />
         
         <AboutSection />
