@@ -10,7 +10,7 @@ const roadmapData = [
     title: "Mahindra & Mahindra Ltd., Nashik",
     role: "Computer Vision Intern",
     time: "Mar 2025 – Jan 2026",
-    desc: "Developed automated AI inspection system processing 1450+ automotive panels daily. Achieved 99.2% uptime and reduced inspection latency by 50%. Integrated system with PLC using Modbus TCP and built configurable defect detection modules with 94% accuracy.",
+    desc: "Developed automated AI inspection system processing 14500+ automotive panels daily. Achieved 99.2% uptime and reduced inspection latency by 50%. Integrated system with PLC using Modbus TCP and built configurable defect detection modules with 94% accuracy.",
     icon: <Target className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary" />,
     color: "bg-primary"
   },
@@ -18,8 +18,8 @@ const roadmapData = [
     phase: "Leadership",
     title: "Sun Nexus Solutions",
     role: "Secretary",
-    time: "Mar 2024 – Present",
-    desc: "Managed 30-member technical team and organized technical seminar KARMASIDDHI. Mentored students in AI, IoT, and automation while working on real-world technology projects.",
+    time: "Mar 2024 – May 2026",
+    desc: "Managed 30-member technical team and organized technical seminars (KARMASIDDHI). Mentored students in AI, IoT, and automation while working on real-world technology projects.",
     icon: <Activity className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-secondary" />,
     color: "bg-secondary"
   },
@@ -27,8 +27,8 @@ const roadmapData = [
     phase: "Backend Architecture",
     title: "Pentagon Space, Hyderabad",
     role: "Python Full Stack Developer Intern",
-    time: "Jan 2026 – Apr 2026",
-    desc: "Developing applications using Python and Django. Building backend systems and REST APIs, improving database-driven application development.",
+    time: "Jan 2026 – Jun 2026",
+    desc: "Developing applications using Python and AI. Building backend systems and REST APIs, improving database-driven application development.",
     icon: <MapPin className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-accent" />,
     color: "bg-accent"
   }

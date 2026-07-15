@@ -7,23 +7,31 @@ import { useRef, useState } from "react";
 const projects = [
   {
     title: "Industrial Vision System for Metal Fragment Detection",
-    description: "AI-powered inspection system deployed in manufacturing with adaptive thresholding and real-time PLC synchronization.",
+    description: "Built and deployed an visual inspection system for manufacturing, featuring adaptive thresholding and real-time PLC synchronization for reliable Fragment detection.",
     features: ["94% Detection Accuracy", "Real-time PLC Sync", "Adaptive Thresholding"],
-    tech: ["Python", "Scikit-learn", "AI Inspection"],
+    tech: [" bidirectional PLC handshaking protocols", "40+ Die configurations", "MELSEC iQ-F FX5U"],
     icon: <Factory className="w-6 h-6 text-primary" />,
     color: "bg-primary"
   },
   {
     title: "AI-Based Vision System for Panel Defect Detection",
-    description: "Computer vision system detecting surface defects on automotive panels.",
+    description: "Designed, developed, and deployed an AI-powered industrial vision system for automated surface defect detection on automotive panels.",
     features: ["95% Accuracy", "GPU Training", "Modbus TCP Integration"],
-    tech: ["YOLOv8", "4K IP Cameras", "Python"],
+    tech: ["Ada Lovelace GPU architecture","YOLOv8", "4K 25FPS IP Cameras"],
     icon: <MonitorPlay className="w-6 h-6 text-secondary" />,
     color: "bg-secondary"
   },
   {
+    title: "GPS Denied Autonomous Drone For Critical Missions",
+    description: "Built a autonomous drone for reliable GPS-denied navigation using visual odometry and sensor fusion.",
+    features: ["450mm Carbon Fiber Frame", "Pixhawk Flight Controller", "LiDAR"],
+    tech: ["Extended Kalman Filter (EKF)", "Raspberry Pi 5", "ROS2"],
+    icon: <Volume2 className="w-6 h-6 text-accent" />,
+    color: "bg-accent"
+  },
+  {
     title: "Speak to Stop (STS)",
-    description: "Conversation-aware audio system that automatically pauses music when the user speaks.",
+    description: "Conversation-aware audio system that automatically pauses and adjusts music when the user speaks.",
     features: ["Silero Voice Activity Detection", "Real-time Windows Integration", "Wearable Potential"],
     tech: ["Audio Processing", "Python", "VAD"],
     icon: <Volume2 className="w-6 h-6 text-accent" />,

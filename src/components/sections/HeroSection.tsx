@@ -67,7 +67,7 @@ export function HeroSection() {
             className="mb-4"
           >
             <span className="text-primary font-orbitron tracking-widest uppercase text-sm font-semibold">
-              System Interface Online
+              CURIOUS. CREATIVE. CONSISTENT.
             </span>
           </motion.div>
 
@@ -132,10 +132,15 @@ export function HeroSection() {
               View Work
               <ArrowRight className="w-5 h-5" />
             </button>
-            <button className="px-8 py-4 flex items-center gap-3 text-white font-medium border border-white/20 hover:bg-white/5 rounded-lg transition-colors backdrop-blur-sm">
+            <a 
+              href="/image/avinash_resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="px-8 py-4 flex items-center gap-3 text-white font-medium border border-white/20 hover:bg-white/5 rounded-lg transition-colors backdrop-blur-sm cursor-pointer"
+            >
               <Download className="w-5 h-5 text-gray-300" />
               Resume
-            </button>
+            </a>
           </motion.div>
         </motion.div>
 

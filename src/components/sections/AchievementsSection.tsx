@@ -1,33 +1,51 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Trophy, Star, Award, Medal } from "lucide-react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { Trophy, Star, Award, Medal, ExternalLink, X } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
 const achievements = [
   {
-    title: "Project Implementation",
+    title: "Fragment Detection Project Implementation",
     issuer: "Mahindra & Mahindra",
-    description: "Successfully developed and deployed an automated AI inspection system resolving real-world manufacturing challenges.",
-    icon: <Trophy className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary" />
+    description: "Successfully developed and deployed Industrial Vision System for Metal Fragment Detection.",
+    icon: <Trophy className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary" />,
+    image: "/image/Fragment.jpg"
+  }, 
+  {
+    title: "Panel Defect Project Implementation",
+    issuer: "Mahindra & Mahindra",
+    description: "Successfully developed and deployed AI-Based Vision System for Panel Defect Detection.",
+    icon: <Trophy className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-secondary" />,
+    image: "/image/panel.jpg"
   },
   {
-    title: "Participant",
+    title: "Certificate of Completion",
+    issuer: "Dept of CSE , Sandip University",
+    description: "successfully completed the project entitled GPS Denied Autonomous Drone For Critical Missions",
+    icon: <Award className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-accent" />,
+    image: "/image/image.jpg"
+  },   
+  {
+    title: "Appreciation ",
+    issuer: "Sun Nexus Solutions",
+    description: "In recognition of outstanding dedication and successful tenure as a member.",
+    icon: <Star className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary" />,
+    image: "/image/sunnexus.jpg"
+  }, 
+  {
+    title: "Appreciation Hackathon",
     issuer: "NASA Space Apps Challenge",
     description: "Collaborated in one of the world's largest hackathons to solve terrestrial and space-based challenges.",
-    icon: <Star className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-secondary" />
+    icon: <Star className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-secondary" />,
+    image: "/image/nasa.jpg"
   },
   {
     title: "Merit Award",
     issuer: "IMPULSE Innovation Program",
-    description: "Awarded for exceptional contribution towards industrial AI innovations.",
-    icon: <Award className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-accent" />
-  },
-  {
-    title: "State-Level Recognition",
-    issuer: "Home Automation & Automatic Farming",
-    description: "Recognized at the state level for innovative IoT solutions in agriculture and home automation.",
-    icon: <Medal className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
+    description: "Recognized at the state level for innovative IoT solutions in Automatic Farming and Home Automation.",
+    icon: <Medal className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />,
+    image: "/image/imagfe.jpg"
   }
 ];
 
@@ -36,21 +54,18 @@ interface AchievementCardProps {
   index: number;
   scrollYProgress: any;
   isMobile: boolean;
+  onClickImage: (image: string) => void;
 }
 
-function AchievementCard({ achievement, index, scrollYProgress, isMobile }: AchievementCardProps) {
+function AchievementCard({ achievement, index, scrollYProgress, isMobile, onClickImage }: AchievementCardProps) {
   // Row 1: index 0 and 1. Row 2: index 2 and 3.
   const isRow1 = index < 2;
 
   // Define when each row should start and end its stamp animation based on scroll progress
-  // The section scroll runs from 0 to 1. 0.15 to 0.5 is when the content wrapper fades in and moves up.
-  // We'll have Row 1 "stamp" in between 0.25 and 0.35
-  // Row 2 will "stamp" in slightly later, between 0.35 and 0.45
   const startProgress = isRow1 ? 0.25 : 0.35;
   const endProgress = isRow1 ? 0.35 : 0.45;
 
   // Create the transform for this specific card
-  // Stamped effect: starts large (scale 1.5) and opaque-ish, rapidly shrinks to 1.0 (firmly placed)
   const stampScale = useTransform(
     scrollYProgress, 
     [startProgress, endProgress], 
@@ -71,15 +86,24 @@ function AchievementCard({ achievement, index, scrollYProgress, isMobile }: Achi
       whileInView={isMobile ? { opacity: 1, scale: 1, y: 0 } : {}}
       viewport={{ once: true, margin: "-50px" }}
       transition={isMobile ? { duration: 0.5, delay: index * 0.1 } : {}}
-      className="glass-panel p-3 sm:p-4 md:p-8 flex items-start gap-2 sm:gap-3 md:gap-6 group hover:glass-panel-hover"
+      onClick={() => onClickImage(achievement.image)}
+      className="glass-panel p-3 sm:p-4 md:p-8 flex items-start gap-2 sm:gap-3 md:gap-6 group hover:glass-panel-hover cursor-pointer relative overflow-hidden"
     >
-      <div className="p-2 sm:p-3 md:p-4 rounded-xl bg-white/5 border border-white/10 shrink-0 group-hover:scale-110 transition-transform">
+      {/* Visual background indicator for clicking */}
+      <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/[0.02] transition-colors duration-300" />
+      
+      <div className="p-2 sm:p-3 md:p-4 rounded-xl bg-white/5 border border-white/10 shrink-0 group-hover:scale-110 transition-transform relative z-10">
         {achievement.icon}
       </div>
-      <div>
-        <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-0.5 sm:mb-1 md:mb-2 group-hover:text-primary transition-colors">
-          {achievement.title}
-        </h3>
+      <div className="relative z-10 flex-grow">
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-0.5 sm:mb-1 md:mb-2 group-hover:text-primary transition-colors">
+            {achievement.title}
+          </h3>
+          <span className="p-1.5 rounded-lg bg-white/5 opacity-0 group-hover:opacity-100 group-hover:bg-primary/20 text-gray-400 group-hover:text-primary transition-all duration-300 shrink-0">
+            <ExternalLink className="w-3.5 h-3.5" />
+          </span>
+        </div>
         <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-gray-500 tracking-wider mb-1.5 sm:mb-2 md:mb-3">
           {achievement.issuer}
         </p>
@@ -95,6 +119,7 @@ export function AchievementsSection() {
   const containerRef = useRef<HTMLElement>(null);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -103,6 +128,26 @@ export function AchievementsSection() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Lock background scroll when modal is active
+  useEffect(() => {
+    if (selectedImage) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+
+      const preventDefault = (e: TouchEvent) => {
+        e.preventDefault();
+      };
+
+      document.addEventListener("touchmove", preventDefault, { passive: false });
+
+      return () => {
+        document.body.style.overflow = "";
+        document.documentElement.style.overflow = "";
+        document.removeEventListener("touchmove", preventDefault);
+      };
+    }
+  }, [selectedImage]);
 
   // Extend scroll distance to 200vh
   const { scrollYProgress } = useScroll({
@@ -166,6 +211,7 @@ export function AchievementsSection() {
                   index={index}
                   scrollYProgress={scrollYProgress}
                   isMobile={isMobile}
+                  onClickImage={setSelectedImage}
                 />
               ))}
             </div>
@@ -174,6 +220,68 @@ export function AchievementsSection() {
 
         </div>
       </div>
+
+      {/* Premium Glassmorphic Modal to show the image */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/85 backdrop-blur-md p-4 cursor-zoom-out"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-4xl w-full max-h-[85vh] glass-panel p-6 flex flex-col items-center border-white/20 bg-background/95 shadow-2xl overflow-hidden"
+            >
+              {/* Top-right prominent Close X button inside the modal glass card */}
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-full transition-colors z-20 cursor-pointer flex items-center justify-center shadow-lg"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* External Close Button (above card) */}
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute -top-12 right-0 text-white hover:text-primary transition-colors flex items-center gap-2 font-orbitron uppercase text-xs tracking-wider cursor-pointer"
+              >
+                <span>Close</span>
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Image Container */}
+              <div className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden rounded-lg bg-black/20">
+                <img
+                  src={selectedImage}
+                  alt="Achievement Certificate"
+                  className="object-contain max-w-full max-h-full rounded-md shadow-2xl"
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-4 mt-4 w-full justify-end px-4 pb-2 pointer-events-auto">
+                <a
+                  href={selectedImage}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg font-medium text-xs font-orbitron transition-all flex items-center gap-2 shadow-[0_0_15px_-3px_var(--color-primary)] cursor-pointer"
+                >
+                  Open in New Tab
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
