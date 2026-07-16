@@ -141,7 +141,7 @@ export function AboutSection() {
                     <p className="text-gray-400 mb-2">Sandip University, Nashik</p>
                     <div className="flex justify-between items-center mt-4">
                       <span className="text-sm font-medium text-gray-500 bg-white/5 px-3 py-1 rounded">2022 - 2026</span>
-                      <span className="text-sm font-semibold text-accent">CGPA: 8.1</span>
+                      <span className="text-sm font-semibold text-accent">CGPA: 8.2</span>
                     </div>
                   </div>
                 </motion.div>

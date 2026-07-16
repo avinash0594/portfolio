@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Trophy, Star, Award, Medal, ExternalLink, X } from "lucide-react";
+import { Trophy, Star, Award, Medal, ExternalLink, X, Lock, Unlock } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
 const achievements = [
@@ -120,6 +120,11 @@ export function AchievementsSection() {
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isSectionLocked, setIsSectionLocked] = useState(true);
+  const [isPasscodeModalOpen, setIsPasscodeModalOpen] = useState(false);
+  const [pin, setPin] = useState<string[]>(["", "", "", ""]);
+  const [pinError, setPinError] = useState(false);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
     setMounted(true);
@@ -129,9 +134,74 @@ export function AchievementsSection() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Lock background scroll when modal is active
+  // Auto-focus and reset inputs when passcode overlay becomes active
   useEffect(() => {
-    if (selectedImage) {
+    if (isPasscodeModalOpen || (selectedImage && isSectionLocked)) {
+      setPin(["", "", "", ""]);
+      setPinError(false);
+      setTimeout(() => {
+        inputRefs.current[0]?.focus();
+      }, 100);
+    }
+  }, [isPasscodeModalOpen, selectedImage, isSectionLocked]);
+
+  // Passcode verification logic (password: 1921)
+  useEffect(() => {
+    const enteredPin = pin.join("");
+    if (enteredPin.length === 4) {
+      if (enteredPin === "1921") {
+        setIsSectionLocked(false);
+        setIsPasscodeModalOpen(false);
+        setTimeout(() => {
+          setPin(["", "", "", ""]);
+        }, 300);
+      } else {
+        setPinError(true);
+        setTimeout(() => {
+          setPinError(false);
+          setPin(["", "", "", ""]);
+          inputRefs.current[0]?.focus();
+        }, 600);
+      }
+    }
+  }, [pin]);
+
+  const handlePinChange = (index: number, val: string) => {
+    if (!/^\d*$/.test(val)) return;
+    const newPin = [...pin];
+    newPin[index] = val.slice(-1);
+    setPin(newPin);
+
+    if (val && index < 3) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handlePinKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace") {
+      if (!pin[index] && index > 0) {
+        const newPin = [...pin];
+        newPin[index - 1] = "";
+        setPin(newPin);
+        inputRefs.current[index - 1]?.focus();
+      } else if (pin[index]) {
+        const newPin = [...pin];
+        newPin[index] = "";
+        setPin(newPin);
+      }
+    }
+  };
+
+  const handleClose = () => {
+    setSelectedImage(null);
+    setIsPasscodeModalOpen(false);
+    setPin(["", "", "", ""]);
+    setPinError(false);
+  };
+
+  // Lock background scroll when modal/passcode screen is active
+  useEffect(() => {
+    if (selectedImage || isPasscodeModalOpen) {
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
 
@@ -147,7 +217,7 @@ export function AchievementsSection() {
         document.removeEventListener("touchmove", preventDefault);
       };
     }
-  }, [selectedImage]);
+  }, [selectedImage, isPasscodeModalOpen]);
 
   // Extend scroll distance to 200vh
   const { scrollYProgress } = useScroll({
@@ -183,7 +253,7 @@ export function AchievementsSection() {
               viewport: { once: true, margin: "-100px" },
               transition: { duration: 0.8, ease: "easeOut" }
             } : {})}
-            className="text-center mb-10 relative z-30"
+            className="text-center mb-10 relative z-30 flex flex-col items-center justify-center w-full"
           >
             <span className="text-secondary font-orbitron tracking-widest uppercase text-sm font-semibold mb-3 block">
               Milestones
@@ -191,9 +261,38 @@ export function AchievementsSection() {
             <h2 className="text-4xl md:text-5xl font-bold font-orbitron text-white">
               Achievements
             </h2>
-            <p className="text-gray-400 mt-4 text-sm font-light uppercase tracking-widest animate-pulse">
-              Click to View Certificates
-            </p>
+
+            <div className="mt-6 flex flex-col items-center gap-3">
+              <button
+                onClick={() => {
+                  if (isSectionLocked) {
+                    setIsPasscodeModalOpen(true);
+                  } else {
+                    setIsSectionLocked(true);
+                  }
+                }}
+                className={`px-5 py-2 rounded-full font-orbitron text-xs font-semibold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 border cursor-pointer hover:scale-105 active:scale-95 ${
+                  isSectionLocked
+                    ? "bg-red-500/10 border-red-500/30 hover:border-red-500/50 text-red-400 hover:bg-red-500/20 shadow-[0_0_15px_-3px_rgba(239,68,68,0.2)]"
+                    : "bg-green-500/10 border-green-500/30 hover:border-green-500/50 text-green-400 hover:bg-green-500/20 shadow-[0_0_15px_-3px_rgba(34,197,94,0.2)]"
+                }`}
+              >
+                {isSectionLocked ? (
+                  <>
+                    <Lock className="w-3.5 h-3.5" />
+                    <span>Locked</span>
+                  </>
+                ) : (
+                  <>
+                    <Unlock className="w-3.5 h-3.5" />
+                    <span>Unlocked</span>
+                  </>
+                )}
+              </button>
+              <p className="text-gray-400 text-xs font-light uppercase tracking-widest animate-pulse">
+                {isSectionLocked ? "Unlock certificates using password" : "Click card to view certificates"}
+              </p>
+            </div>
           </motion.div>
 
           {/* Content Wrapper that orchestrates the slide-ins */}
@@ -221,14 +320,14 @@ export function AchievementsSection() {
         </div>
       </div>
 
-      {/* Premium Glassmorphic Modal to show the image */}
+      {/* Premium Glassmorphic Modal to show the image or passcode */}
       <AnimatePresence>
-        {selectedImage && (
+        {(selectedImage || isPasscodeModalOpen) && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSelectedImage(null)}
+            onClick={handleClose}
             className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/85 backdrop-blur-md p-4 cursor-zoom-out"
           >
             <motion.div
@@ -237,11 +336,11 @@ export function AchievementsSection() {
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-4xl w-full max-h-[85vh] glass-panel p-6 flex flex-col items-center border-white/20 bg-background/95 shadow-2xl overflow-hidden"
+              className="relative max-w-4xl w-full max-h-[85vh] glass-panel p-6 flex flex-col items-center border-white/20 bg-background/95 shadow-2xl overflow-hidden cursor-default"
             >
               {/* Top-right prominent Close X button inside the modal glass card */}
               <button
-                onClick={() => setSelectedImage(null)}
+                onClick={handleClose}
                 className="absolute top-4 right-4 text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-full transition-colors z-20 cursor-pointer flex items-center justify-center shadow-lg"
                 aria-label="Close modal"
               >
@@ -250,34 +349,120 @@ export function AchievementsSection() {
 
               {/* External Close Button (above card) */}
               <button
-                onClick={() => setSelectedImage(null)}
+                onClick={handleClose}
                 className="absolute -top-12 right-0 text-white hover:text-primary transition-colors flex items-center gap-2 font-orbitron uppercase text-xs tracking-wider cursor-pointer"
               >
                 <span>Close</span>
                 <X className="w-5 h-5" />
               </button>
 
-              {/* Image Container */}
-              <div className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden rounded-lg bg-black/20">
-                <img
-                  src={selectedImage}
-                  alt="Achievement Certificate"
-                  className="object-contain max-w-full max-h-full rounded-md shadow-2xl"
-                />
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex gap-4 mt-4 w-full justify-end px-4 pb-2 pointer-events-auto">
-                <a
-                  href={selectedImage}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg font-medium text-xs font-orbitron transition-all flex items-center gap-2 shadow-[0_0_15px_-3px_var(--color-primary)] cursor-pointer"
+              {/* Modal Body Content */}
+              {isSectionLocked ? (
+                // Locked passcode container
+                <motion.div
+                  animate={pinError ? "shake" : "default"}
+                  variants={{
+                    shake: {
+                      x: [0, -10, 10, -10, 10, -5, 5, 0],
+                      transition: { duration: 0.4 }
+                    },
+                    default: { x: 0 }
+                  }}
+                  className="flex flex-col items-center justify-center py-8 w-full max-w-md relative z-10"
                 >
-                  Open in New Tab
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </div>
+                  {/* Blurry certificate background preview if one is selected */}
+                  {selectedImage && (
+                    <div className="absolute inset-0 -z-10 opacity-30 blur-xl scale-110 pointer-events-none transition-all duration-500 overflow-hidden rounded-lg">
+                      <img
+                        src={selectedImage}
+                        alt="Certificate Preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+
+                  <motion.div
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                    className="p-4 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 mb-4 shadow-[0_0_20px_-3px_rgba(239,68,68,0.2)]"
+                  >
+                    <Lock className="w-8 h-8" />
+                  </motion.div>
+
+                  <h3 className="text-lg font-bold font-orbitron text-white mb-1 uppercase tracking-wider text-center">
+                    Secure Access Required
+                  </h3>
+                  <p className="text-gray-400 text-xs font-light text-center mb-6 max-w-xs">
+                    Please enter the passcode to view the certificates.
+                  </p>
+
+                  <div className="flex gap-3 justify-center mb-6">
+                    {pin.map((digit, idx) => (
+                      <input
+                        key={idx}
+                        ref={(el) => {
+                          inputRefs.current[idx] = el;
+                        }}
+                        type="password"
+                        maxLength={1}
+                        value={digit}
+                        onChange={(e) => handlePinChange(idx, e.target.value)}
+                        onKeyDown={(e) => handlePinKeyDown(idx, e)}
+                        className={`w-12 h-14 bg-white/5 border text-center text-xl font-bold font-orbitron rounded-xl focus:outline-none transition-all duration-200 ${
+                          pinError
+                            ? "border-red-500/50 bg-red-500/5 text-red-400 focus:border-red-500 shadow-[0_0_15px_-3px_rgba(239,68,68,0.3)]"
+                            : "border-white/10 text-white focus:border-primary focus:bg-white/10 focus:shadow-[0_0_15px_-3px_var(--color-primary)]"
+                        }`}
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        aria-label={`Digit ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+
+                  <div className="h-5 flex items-center justify-center">
+                    {pinError && (
+                      <p className="text-red-400 text-xs font-semibold uppercase tracking-wider animate-bounce">
+                        Access Denied - Incorrect PIN
+                      </p>
+                    )}
+                  </div>
+                </motion.div>
+              ) : (
+                // Unlocked Content (Certificate Image)
+                selectedImage && (
+                  <>
+                    {/* Image Container */}
+                    <div className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden rounded-lg bg-black/20">
+                      <img
+                        src={selectedImage}
+                        alt="Achievement Certificate"
+                        className="object-contain max-w-full max-h-full rounded-md shadow-2xl"
+                      />
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-4 mt-4 w-full justify-end px-4 pb-2 pointer-events-auto">
+                      <button
+                        onClick={() => setIsSectionLocked(true)}
+                        className="px-4 py-2 border border-white/10 hover:border-red-500/30 bg-white/5 hover:bg-red-500/10 text-gray-400 hover:text-red-400 rounded-lg font-medium text-xs font-orbitron transition-all flex items-center gap-2 cursor-pointer"
+                      >
+                        Lock Certificates
+                        <Lock className="w-4 h-4" />
+                      </button>
+                      <a
+                        href={selectedImage}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg font-medium text-xs font-orbitron transition-all flex items-center gap-2 shadow-[0_0_15px_-3px_var(--color-primary)] cursor-pointer"
+                      >
+                        Open in New Tab
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    </div>
+                  </>
+                )
+              )}
             </motion.div>
           </motion.div>
         )}
