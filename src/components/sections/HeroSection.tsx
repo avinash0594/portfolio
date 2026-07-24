@@ -133,7 +133,7 @@ export function HeroSection() {
               <ArrowRight className="w-5 h-5" />
             </button>
             <a 
-              href="/image/avinash_resume.pdf"
+              href="/image/resume_avinash.pdf"
               target="_blank"
               rel="noreferrer"
               className="px-8 py-4 flex items-center gap-3 text-white font-medium border border-white/20 hover:bg-white/5 rounded-lg transition-colors backdrop-blur-sm cursor-pointer"
