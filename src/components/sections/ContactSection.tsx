@@ -16,7 +16,7 @@ export function ContactSection() {
     const emailSubject = subject || "New Inquiry via Portfolio";
     const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
 
-    const mailtoLink = `mailto:avinash9948733795@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(body)}`;
+    const mailtoLink = `mailto:avinash.dasari21@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoLink;
   };
 
@@ -67,13 +67,13 @@ export function ContactSection() {
               </div>
 
               <div className="space-y-4 sm:space-y-6">
-                <a href="mailto:avinash9948733795@gmail.com" className="flex items-center gap-4 group">
+                <a href="mailto:avinash.dasari21@gmail.com" className="flex items-center gap-4 group">
                   <div className="p-3 rounded-full bg-white/5 group-hover:bg-primary/20 group-hover:text-primary transition-colors text-gray-400">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
                     <span className="block text-sm text-gray-400 font-medium">Email</span>
-                    <span className="text-white group-hover:text-primary transition-colors text-sm">avinash9948733795@gmail.com</span>
+                    <span className="text-white group-hover:text-primary transition-colors text-sm">avinash.dasari21@gmail.com</span>
                   </div>
                 </a>
 

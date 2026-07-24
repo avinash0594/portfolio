@@ -20,14 +20,14 @@ const skillsData = [
     category: "Data Analysis",
     skills: [{ name: "NumPy" }, { name: "Pandas" }, { name: "SciPy" }, { name: "Matplotlib" }, { name: "Plotly" }]
   },
-  {
-    category: "Databases",
-    skills: [{ name: "SQL" }, { name: "MySQL" }, { name: "MongoDB" }]
-  },
-  {
-    category: "Development",
-    skills: [{ name: "Django" }, { name: "REST APIs" }, { name: "Full Stack Development" }]
-  },
+  // {
+  //   category: "Databases",
+  //   skills: [{ name: "SQL" }, { name: "MySQL" }, { name: "MongoDB" }]
+  // },
+  // {
+  //   category: "Development",
+  //   skills: [{ name: "Django" }, { name: "REST APIs" }, { name: "Full Stack Development" }]
+  // },
   {
     category: "Industrial Systems",
     skills: [{ name: "PLC Integration" }, { name: "Modbus TCP" }, { name: "Networking (TCP/IP)" }]

@@ -27,7 +27,7 @@ const roadmapData = [
     phase: "Backend Architecture",
     title: "Pentagon Space, Hyderabad",
     role: "Python Full Stack Developer Intern",
-    time: "Jan 2026 – Jun 2026",
+    time: "Feb 2026 – May 2026",
     desc: "Developing applications using Python and AI. Building backend systems and REST APIs, improving database-driven application development.",
     icon: <MapPin className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-accent" />,
     color: "bg-accent"
