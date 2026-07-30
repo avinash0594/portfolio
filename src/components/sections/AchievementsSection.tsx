@@ -24,7 +24,7 @@ const achievements = [
     issuer: "Dept of CSE , Sandip University",
     description: "successfully completed the project entitled GPS Denied Autonomous Drone For Critical Missions",
     icon: <Award className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-accent" />,
-    image: "/image/image.jpg"
+    image: "/image/drone.jpg"
   },
   {
     title: "Appreciation ",
@@ -45,7 +45,7 @@ const achievements = [
     issuer: "IMPULSE Innovation Program",
     description: "Recognized at the state level for innovative IoT solutions in Automatic Farming and Home Automation.",
     icon: <Medal className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />,
-    image: "/image/imagfe.jpg"
+    image: "/image/merit.jpg"
   }
 ];
 
