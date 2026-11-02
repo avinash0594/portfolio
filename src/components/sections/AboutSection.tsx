@@ -28,7 +28,7 @@ export function AboutSection() {
   // Stage 1: Header Reveal (0.05 to 0.25 progress)
   const headerY = useTransform(scrollYProgress, [0.05, 0.25], ["10vh", "0vh"]);
   const headerScale = useTransform(scrollYProgress, [0.05, 0.25], [1.15, 1]);
-  
+
   // Stage 2: Content Reveal & Slide-ins (0.10 to 0.25 progress)
   // Bio card slides in from the left (using px to avoid horizontal scrollbar bugs)
   const slideXLeft = useTransform(scrollYProgress, [0.10, 0.25], ["-150px", "0px"]);
@@ -54,23 +54,23 @@ export function AboutSection() {
 
   return (
     <section ref={containerRef} id="about" className="relative z-10 w-full bg-background h-auto md:h-[200vh]">
-      
+
       {/* Pinned Container - Only sticky on desktop */}
       <div className="relative md:sticky top-0 h-auto md:h-screen pt-24 pb-12 md:pt-28 md:pb-0 w-full flex flex-col items-center justify-start overflow-hidden">
-        
+
         {/* Subtle Background Parallax Elements */}
-        <motion.div 
+        <motion.div
           style={{ y: bgOrb1Y, rotate: 45 }}
           className="absolute -top-32 -left-32 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none"
         />
-        <motion.div 
+        <motion.div
           style={{ y: bgOrb2Y, rotate: -45 }}
           className="absolute -bottom-32 -right-32 w-96 h-96 bg-secondary/5 rounded-full blur-[100px] pointer-events-none"
         />
 
         <div className="container mx-auto px-6 md:px-6 relative z-10 w-full flex flex-col items-center justify-center h-full">
-          
-          <motion.div 
+
+          <motion.div
             style={isMobile ? { y: 0, scale: 1 } : { y: headerY, scale: headerScale }}
             {...(isMobile ? {
               initial: { opacity: 0, y: 15 },
@@ -93,11 +93,11 @@ export function AboutSection() {
 
           {/* Content Wrapper that orchestrates the slide-ins */}
           <div className="w-full max-w-6xl relative z-20 flex flex-col items-center justify-center pointer-events-none overflow-hidden pb-10">
-            
+
             <div className="grid md:grid-cols-12 gap-8 items-stretch w-full pointer-events-auto">
-              
+
               {/* Main Bio Card - Slides from Left */}
-              <motion.div 
+              <motion.div
                 style={isMobile ? {} : { x: slideXLeft, opacity: contentOpacity }}
                 {...(isMobile ? {
                   initial: { opacity: 0, x: -30 },
@@ -116,10 +116,10 @@ export function AboutSection() {
                   With extensive exposure to heavy manufacturing environments, I specialize in building and deploying highly accurate computer vision pipelines and intelligent systems that function reliably in latency-critical scenarios.
                 </p>
               </motion.div>
- 
+
               <div className="md:col-span-5 flex flex-col gap-4 sm:gap-6 md:gap-8 mt-4 md:mt-0">
                 {/* Education Card - Slides from Right */}
-                <motion.div 
+                <motion.div
                   style={isMobile ? {} : { x: slideXRight, opacity: contentOpacity }}
                   {...(isMobile ? {
                     initial: { opacity: 0, x: 30 },
@@ -129,7 +129,7 @@ export function AboutSection() {
                   } : {})}
                   className="glass-panel p-3 sm:p-4 md:p-8 shadow-xl"
                 >
-                   <div className="flex items-center gap-3 mb-3 sm:mb-4 md:mb-6">
+                  <div className="flex items-center gap-3 mb-3 sm:mb-4 md:mb-6">
                     <div className="p-2 sm:p-3 bg-white/5 rounded-lg">
                       <GraduationCap className="w-5 h-5 md:w-6 md:h-6 text-primary" />
                     </div>
@@ -145,9 +145,9 @@ export function AboutSection() {
                     </div>
                   </div>
                 </motion.div>
- 
+
                 {/* Core Protocols / Interests - Slides from Right, sharing the transform */}
-                <motion.div 
+                <motion.div
                   style={isMobile ? {} : { x: slideXRight, opacity: contentOpacity }}
                   {...(isMobile ? {
                     initial: { opacity: 0, x: 30 },
@@ -157,18 +157,18 @@ export function AboutSection() {
                   } : {})}
                   className="glass-panel p-4 sm:p-5 md:p-8 shadow-xl"
                 >
-                   <h3 className="text-lg sm:text-xl font-bold font-orbitron text-white mb-4 sm:mb-6">Core Focus</h3>
-                   <div className="flex flex-wrap gap-3">
-                     {interests.map((interest) => (
-                       <div 
-                         key={interest.name}
-                         className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/5 hover:bg-white/10 transition-colors"
-                       >
-                         {interest.icon}
-                         <span className="text-sm font-medium text-gray-300">{interest.name}</span>
-                       </div>
-                     ))}
-                   </div>
+                  <h3 className="text-lg sm:text-xl font-bold font-orbitron text-white mb-4 sm:mb-6">Core Focus</h3>
+                  <div className="flex flex-wrap gap-3">
+                    {interests.map((interest) => (
+                      <div
+                        key={interest.name}
+                        className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/5 hover:bg-white/10 transition-colors"
+                      >
+                        {interest.icon}
+                        <span className="text-sm font-medium text-gray-300">{interest.name}</span>
+                      </div>
+                    ))}
+                  </div>
                 </motion.div>
               </div>
 

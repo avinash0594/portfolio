@@ -46,6 +46,13 @@ const achievements = [
     description: "Recognized at the state level for innovative IoT solutions in Automatic Farming and Home Automation.",
     icon: <Medal className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />,
     image: "/image/merit.jpg"
+  },
+  {
+    title: "Cirtificate of Completion",
+    issuer: "Pentagon Space",
+    description: "Successfully completed Python Full Stack course",
+    icon: <Medal className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />,
+    image: "/image/pentagon.jpg"
   }
 ];
 
